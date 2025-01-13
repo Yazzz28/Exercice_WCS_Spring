@@ -4,6 +4,7 @@ public class AuthorDTO {
     private Long id;
     private String firstname;
     private String lastname;
+    private String contribution;
 
     // Getters et setters
 
@@ -25,5 +26,13 @@ public class AuthorDTO {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public String getContribution() {
+        return contribution;
+    }
+
+    public void setContribution(String contribution) {
+        this.contribution = contribution;
     }
 }

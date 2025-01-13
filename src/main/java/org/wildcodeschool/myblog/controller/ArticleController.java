@@ -21,7 +21,6 @@ public class ArticleController {
     private final CategoryRepository categoryRepository;
     private final ImageRepository imageRepository;
     private final ArticleAuthorRepository articleAuthorRepository;
-
     private final AuthorRepository authorRepository;
 
     public ArticleController(
@@ -265,6 +264,7 @@ public class ArticleController {
                         authorDTO.setId(articleAuthor.getAuthor().getId());
                         authorDTO.setFirstname(articleAuthor.getAuthor().getFirstname());
                         authorDTO.setLastname(articleAuthor.getAuthor().getLastname());
+                        authorDTO.setContribution(articleAuthor.getContribution());
                         return authorDTO;
                     })
                     .collect(Collectors.toList()));
