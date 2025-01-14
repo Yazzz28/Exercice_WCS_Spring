@@ -47,7 +47,6 @@ public class ArticleController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Article> updateArticle(@PathVariable Long id, @RequestBody Article articleDetails) {
-
         Article article = articleRepository.findById(id).orElse(null);
         if (article == null) {
             return ResponseEntity.notFound().build();
@@ -63,7 +62,6 @@ public class ArticleController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteArticle(@PathVariable Long id) {
-
         Article article = articleRepository.findById(id).orElse(null);
         if (article == null) {
             return ResponseEntity.notFound().build();
@@ -75,7 +73,7 @@ public class ArticleController {
 
     @GetMapping("/search-title")
     public ResponseEntity<List<Article>> getArticlesByTitle(@RequestParam String searchTerms) {
-        List<Article> articles = articleRepository.findByTitle(searchTerms);
+        List<Article> articles = articleRepository.findByTitle(searchTerms); // Ensure this method exists in the repository.
         if (articles.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -84,58 +82,30 @@ public class ArticleController {
 
     @GetMapping("/search-content")
     public ResponseEntity<List<Article>> getArticlesByContent(@RequestParam String searchTerms) {
-        List<Article> articles = articleRepository.findByContentContaining(searchTerms);
+        List<Article> articles = articleRepository.findByContentContaining(searchTerms); // Ensure this method exists in the repository.
         if (articles.isEmpty()) {
             return ResponseEntity.noContent().build();
-<<<<<<< Updated upstream
-=======
         }
         return ResponseEntity.ok(articles);
     }
 
     @GetMapping("/search-date")
     public ResponseEntity<List<Article>> getArticlesByDate(@RequestParam String searchTerms) {
-        LocalDateTime date = LocalDateTime.parse(searchTerms);
-        List<Article> articles = articleRepository.findByCreatedAtAfter(date);
-        if (articles.isEmpty()) {
-            return ResponseEntity.noContent().build();
+        try {
+            LocalDateTime date = LocalDateTime.parse(searchTerms);
+            List<Article> articles = articleRepository.findByCreatedAtAfter(date); // Ensure this method exists in the repository.
+            if (articles.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(articles);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(articles);
     }
 
     @GetMapping("/latest-articles")
     public ResponseEntity<List<Article>> getLatestArticles() {
-        List<Article> articles = articleRepository.findTop5ByOrderByCreatedAtDesc();
-        if (articles.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(articles);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<ArticleDTO> getArticleById(@PathVariable Long id) {
-
-        Article article = articleRepository.findById(id).orElse(null);
-        if (article == null) {
-            return ResponseEntity.notFound().build();
->>>>>>> Stashed changes
-        }
-        return ResponseEntity.ok(articles);
-    }
-
-    @GetMapping("/search-date")
-    public ResponseEntity<List<Article>> getArticlesByDate(@RequestParam String searchTerms) {
-        LocalDateTime date = LocalDateTime.parse(searchTerms);
-        List<Article> articles = articleRepository.findCreatedAfter(date);
-        if (articles.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(articles);
-    }
-
-    @GetMapping("/latest-articles")
-    public ResponseEntity<List<Article>> getLatestArticles() {
-        List<Article> articles = articleRepository.findTop5ByOrderByCreatedAtDesc();
+        List<Article> articles = articleRepository.findTop5ByOrderByCreatedAtDesc(); // Ensure this method exists in the repository.
         if (articles.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
