@@ -94,7 +94,6 @@ public class ArticleController {
         if (article == null) {
             return ResponseEntity.notFound().build();
         }
-
         return ResponseEntity.ok(convertToDTO(article));
     }
 
@@ -186,7 +185,6 @@ public class ArticleController {
         } else {
             article.getImages().clear();
         }
-
         if (articleDetails.getArticleAuthors() != null) {
             // Supprimer manuellement les anciens ArticleAuthor
             for (ArticleAuthor oldArticleAuthor : article.getArticleAuthors()) {
