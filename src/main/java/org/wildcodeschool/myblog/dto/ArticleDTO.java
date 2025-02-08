@@ -1,7 +1,5 @@
 package org.wildcodeschool.myblog.dto;
 
-import org.wildcodeschool.myblog.model.Author;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
