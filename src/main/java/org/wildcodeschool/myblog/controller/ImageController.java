@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.wildcodeschool.myblog.Service.ImageService;
 import org.wildcodeschool.myblog.dto.ImageDTO;
+import org.wildcodeschool.myblog.exception.FileTooLargeException;
 import org.wildcodeschool.myblog.model.Image;
 
 import java.util.List;
@@ -36,14 +37,21 @@ public class ImageController {
         return ResponseEntity.ok(image);
     }
 
+
     @PostMapping
     public ResponseEntity<ImageDTO> createImage(@RequestBody Image image) {
+        if (image.getFileSize() > Image.MAX_FILE_SIZE) {
+            throw new FileTooLargeException("Le fichier est trop volumineux");
+        }
         ImageDTO savedImage = imageService.createImage(image);
         return ResponseEntity.ok(savedImage);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ImageDTO> updateImage(@PathVariable Long id, @RequestBody Image imageDetails) {
+        if (imageDetails.getFileSize() > Image.MAX_FILE_SIZE) {
+            throw new FileTooLargeException("Le fichier est trop volumineux");
+        }
         ImageDTO updatedImage = imageService.updateImage(id, imageDetails);
         if (updatedImage == null) {
             return ResponseEntity.notFound().build();

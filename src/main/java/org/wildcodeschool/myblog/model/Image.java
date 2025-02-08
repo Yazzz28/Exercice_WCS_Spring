@@ -7,6 +7,8 @@ import java.util.List;
 @Entity
 public class Image {
 
+    public static final long MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 Mo
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -42,4 +44,5 @@ public class Image {
     public void setArticles(List<Article> articles) {
         this.articles = articles;
     }
+
 }

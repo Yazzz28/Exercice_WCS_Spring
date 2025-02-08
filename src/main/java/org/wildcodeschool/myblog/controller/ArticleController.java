@@ -5,7 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.wildcodeschool.myblog.Service.ArticleService;
 import org.wildcodeschool.myblog.dto.ArticleDTO;
-import org.wildcodeschool.myblog.model.*;
+import org.wildcodeschool.myblog.exception.ResourceNotFoundException;
+import org.wildcodeschool.myblog.model.Article;
+
 import java.util.List;
 
 @RestController
@@ -29,10 +31,8 @@ public class ArticleController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ArticleDTO> getArticleById(@PathVariable Long id) {
-        ArticleDTO article = articleService.getArticleById(id);
-        if (article == null) {
-            return ResponseEntity.notFound().build();
-        }
+        ArticleDTO article = articleService.getArticleById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("L'article avec l'id " + id + " n'a pas été trouvé"));
         return ResponseEntity.ok(article);
     }
 
